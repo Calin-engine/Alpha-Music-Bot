@@ -5,7 +5,6 @@ const emoji = require("../../settings/emoji.json");
 const embed = require("../../settings/embed.json");
 const config = require("../../settings/config.json");
 
-
 module.exports = new Command({
   // options
   name: "",

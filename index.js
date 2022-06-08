@@ -1,5 +1,5 @@
 const express = require('express')
-const app = express();
+const app = express()
 const port = 3000
 
 app.get('/', (req, res) => res.send('Your Bot Is Online!!!'))
@@ -10,7 +10,6 @@ console.log('Your app is listening a http://localhost:${port}')
 
 const { Client, Collection, Intents } = require("discord.js");
 const fs = require("fs");
-const prefix = "?";
 const client = new Client({
   messageCacheLifetime: 60,
   fetchAllMembers: false,
@@ -86,18 +85,27 @@ client.music = new Enmap({
   dataDir: "./Database/Music",
 });
 
-client.on("messageCreate", message => {
-  if(message.content.startswith(prefix)){
-    const args = message.content.slice(prefix.length).trim().split(/ +/g)
-    const commandName = args.shift()
-    const command = client.commands.get(commandName)
-    if(!command) return 
-    command.run(client, message, args)
-      //message.channel.send({content: "The command doesn't exist!"})
-  }
-})
-
 client.login(process.env.token || config.token);
+
+var لیست = " plist/ ";
+var تکرار = " loop/ ";
+var صدا = " volume/ ";
+var فیلترصدا = " filter/ ";
+
+client.on("message", message => {
+  if(message.content === "لیست"){
+    message.channel.send(`برای مشاهده ی لیست اهنگ ها دستور ${لیست} را تایپ کنید`)
+  }
+  if(message.content === "تکرار"){
+    message.channel.send(`برای تکرار شدن اهنگ ها دستور ${تکرار} را تایپ کنید`)
+  }
+  if(message.content === "صدا"){
+    message.channel.send(`برای تنظیم میزان صدای اهنگ دستور ${صدا} را تایپ کنید`)
+  }
+  if(message.content === "فیلتر"){
+    message.channel.send(`برای تغییر فیلتر صدای اهنگ دستور ${فیلترصدا} را تایپ کنید`)
+  }
+});
 
 process.on("unhandledRejection", (reason, p) => {
   console.log(" [Error_Handling] :: Unhandled Rejection/Catch");
